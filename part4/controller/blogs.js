@@ -9,7 +9,11 @@ exports.getBlogs = (request, response) => {
   };
 
 exports.createBlog = (request, response) => {
-  const blog = new Blog(request.body)
+  const requestBlog = request.body;
+  if(!requestBlog.like){
+    requestBlog.like = 0;
+  }
+  const blog = new Blog(requestBlog);
   blog
     .save()
     .then(result => {

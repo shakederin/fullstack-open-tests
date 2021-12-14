@@ -74,6 +74,19 @@ describe("Back-End Testing", ()=>{
         }
         expect(response.body).toHaveLength(7)
     })
+    it("should assign to the LIKE property the value 0, if it missing", async ()=>{
+        await api.post("/api/blogs").send({
+            title: "add post",
+            author: "shaked",
+            url: "https://reactpatterns.com/",
+        });
+        const response = await api.get("/api/blogs");
+        for(const blog of response.body){
+            if(blog.title === "shaked"){
+                expect(blog.like).toBe(0);
+            }
+        }
+    })
 
 }, 10000) 
 
