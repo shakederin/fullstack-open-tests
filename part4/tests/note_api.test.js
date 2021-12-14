@@ -1,5 +1,4 @@
 const { it, expect } = require("@jest/globals");
-const expectExport = require("expect");
 const mongoose = require("mongoose")
 const supertest = require("supertest");
 const app = require("../index")
@@ -88,14 +87,23 @@ describe("Back-End Testing", ()=>{
             }
         }
     })
-    it.only("should return status 400 if url or title properties are missing", async ()=>{
+    it("should return status 400 if url or title properties are missing", async ()=>{
         const response = await api.post("/api/blogs").send({
                 author: "shaked"
         })
         expect(response.status).toBe(400)
     })
-
 }, 10000) 
+
+describe("Data Base Managment", ()=>{
+    it("should delete blog by the giving id", async ()=>{
+        const response = await api.delete("/api/blogs/Canonical string reduction");
+        const blogs = await api.get("/api/blogs/");
+        expect(response.status).toBe(200);
+        expect(blogs.body).toHaveLength(5);
+        expect(response.text).toBe("deleted successfully");
+    })
+})
 
 
 afterAll(() => {

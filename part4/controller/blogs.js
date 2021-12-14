@@ -24,3 +24,13 @@ exports.createBlog = (request, response) => {
       response.status(201).json(result)
     })
 };
+
+exports.deletePost = async (req, res)=>{
+  const blogId = req.params.title;
+  const o = await Blog.deleteOne({title: blogId});
+  if(o.deletedCount === 1){
+    res.status(200).send("deleted successfully");
+  }else{
+    res.status(400).send("couldnt find blog");
+  }
+}
