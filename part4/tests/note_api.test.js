@@ -53,12 +53,28 @@ describe("Back-End Testing", ()=>{
         const response = await api.get("/api/blogs");
         expect(response.body.length).toBe(mockData.length)
     })
-    it.only("should check if the blog has a id property", async ()=>{
+    it("should check if the blog has a id property", async ()=>{
         const response = await api.get("/api/blogs");
         for(const blog of response.body){
             expect(blog._id).toBeDefined()
         }
     })
+    it("should check if a blog add after post request", async ()=>{
+        await api.post("/api/blogs").send({
+            title: "add post",
+            author: "shaked",
+            url: "https://reactpatterns.com/",
+            likes: 7
+        });
+        const response = await api.get("/api/blogs");
+        for(const blog of response.body){
+            if(blog.title === "shaked"){
+                expect(blog.title).toBe("add post");
+            }
+        }
+        expect(response.body).toHaveLength(7)
+    })
+
 }, 10000) 
 
 
