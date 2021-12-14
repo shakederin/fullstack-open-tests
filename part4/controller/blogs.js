@@ -10,6 +10,10 @@ exports.getBlogs = (request, response) => {
 
 exports.createBlog = (request, response) => {
   const requestBlog = request.body;
+  if(!requestBlog.title || !requestBlog.url){
+    response.status(400).send("some properties are missing");
+    return;
+  }
   if(!requestBlog.like){
     requestBlog.like = 0;
   }

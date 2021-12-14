@@ -1,4 +1,5 @@
 const { it, expect } = require("@jest/globals");
+const expectExport = require("expect");
 const mongoose = require("mongoose")
 const supertest = require("supertest");
 const app = require("../index")
@@ -86,6 +87,12 @@ describe("Back-End Testing", ()=>{
                 expect(blog.like).toBe(0);
             }
         }
+    })
+    it.only("should return status 400 if url or title properties are missing", async ()=>{
+        const response = await api.post("/api/blogs").send({
+                author: "shaked"
+        })
+        expect(response.status).toBe(400)
     })
 
 }, 10000) 
