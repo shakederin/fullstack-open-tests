@@ -15,7 +15,6 @@ const listener = app.listen(PORT, () => {
 
 app.killServer = () =>{
   listener.close()
-  console.log("killed server");
 }
 
 module.exports = app;

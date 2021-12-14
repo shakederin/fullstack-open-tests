@@ -26,11 +26,22 @@ exports.createBlog = (request, response) => {
 };
 
 exports.deletePost = async (req, res)=>{
-  const blogId = req.params.title;
-  const o = await Blog.deleteOne({title: blogId});
+  const blogTitle = req.params.title;
+  const o = await Blog.deleteOne({title: blogTitle});
   if(o.deletedCount === 1){
     res.status(200).send("deleted successfully");
   }else{
     res.status(400).send("couldnt find blog");
   }
+}
+
+exports.updateBlog = async (req,res)=>{
+  const blogTitle = req.params.title;
+  console.log(blogTitle);
+  const response = await Blog.updateOne({title: blogTitle},{ $inc : {likes: 1}});
+  if(response.modifiedCount === 0){
+    res.status(400).send("blog not found. please check the title sent.");
+    return
+  }
+  res.status(200).send("update successfully!")
 }

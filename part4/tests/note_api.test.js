@@ -103,7 +103,12 @@ describe("Data Base Managment", ()=>{
         expect(blogs.body).toHaveLength(5);
         expect(response.text).toBe("deleted successfully");
     })
-})
+    it("should add 1 to the current amount of likes of a blog", async ()=>{
+        const response = await api.post("/api/blogs/update/React patterns");
+        expect(response.status).toBe(200);
+        expect(response.text).toBe("update successfully!");
+    })
+}, 10000)
 
 
 afterAll(() => {
